@@ -1,4 +1,4 @@
-# NlDESA - Nonlinear Differential Equation Stability Analysis
+# NLDESA - Nonlinear Differential Equation Stability Analysis
 
 This is a Python package for the stability analysis of nonlinear differential equations using JAX [1] and pyDMD [2] [3].
 The package is still in development and is not yet ready for use.
