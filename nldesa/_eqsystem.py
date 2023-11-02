@@ -98,7 +98,7 @@ class Equation_System:
         plot = ax.plot(self.t, self.solution[:, component])
         return plot
     
-    def plot_phase(self, components, title = None, xlabel = None, ylabel = None, zlabel = None, legend = None):
+    def plot_phase(self, components, title = None, xlabel = None, ylabel = None, zlabel = None, legend = None, **kwargs):
         """ Plot the phase space.
         
         Parameters
@@ -129,7 +129,7 @@ class Equation_System:
                 ax.set_ylabel(ylabel)
             if legend is not None:
                 ax.legend(legend)
-            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]])
+            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]], **kwargs)
         elif len(components) == 3:
             ax = plt.figure().add_subplot(projection='3d')
             if title is not None:
@@ -142,6 +142,6 @@ class Equation_System:
                 ax.set_zlabel(zlabel)
             if legend is not None:
                 ax.legend(legend)
-            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]], self.solution[:, components[2]])
+            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]], self.solution[:, components[2]], **kwargs)
         
         return plot
