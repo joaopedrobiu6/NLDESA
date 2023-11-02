@@ -10,13 +10,13 @@ def lorentz_force(w, t, a):
     return dydt
 
 # Define the initial conditions
-w0 = jnp.asarray([1.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+w0 = jnp.asarray([0.0, 0.0, 0.0, 0.0, 1.0, 1.0])
 # Define the time interval
 t0 = 0.0
 t1 = 30.0
 n = 101
 # Define the parameters
-a = jnp.asarray([1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]) #m, e, Ex, Ey, Ez, Bx, By, Bz
+a = jnp.asarray([1, 1, 0.1, 0.1, 0, 0, 0, 1]) #m, e, Ex, Ey, Ez, Bx, By, Bz
 
 # Create the equation system
 eqsys = Equation_System(lorentz_force, w0, t0, t1, n)

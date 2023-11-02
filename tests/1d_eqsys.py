@@ -18,7 +18,7 @@ t1 = 10.0
 n = 101
 
 # Define the parameters
-a = jnp.asarray([0.0, -9.81])
+a = jnp.asarray([0.0, -10])
 
 # Create the equation system
 eqsys = Equation_System(pendulum, y0, t0, t1, n)
