@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nldesa - Nonlinear Differential Equation Stability Analysis"
+version = "0.0.1"
+authors = [
+  { name="João Pedro Ferreira Biu", email="joaopedrofbiu@tecnico.ulisboa.pt" },
+]
+description = "A package with tools to solve and analyse nonlinear differential equations Stability using DMD."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/pypa/sampleproject"
+"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
