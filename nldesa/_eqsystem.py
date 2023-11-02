@@ -1,12 +1,13 @@
+from functools import partial
 import jax.numpy as jnp
 from jax.experimental.ode import odeint as jax_odeint
-from functools import partial
 from jax import jit
 import matplotlib.pyplot as plt
 
-class Equation_System:
+
+class EquationSystem:
     """ Differential Equation System 
-    
+
     Parameters
     ----------
     f : function
@@ -21,6 +22,7 @@ class Equation_System:
     n : int
         The number of time steps.
     """
+
     def __init__(self, f, y0, t0, t1, n):
         self.f = f
         self.y0 = y0
@@ -29,7 +31,7 @@ class Equation_System:
         self.n = n
         self.t = jnp.linspace(t0, t1, n)
 
-    def solve(self, a=None, rtol = 1e-10, atol = 1e-10, return_solution = False):
+    def solve(self, a=None, rtol=1e-10, atol=1e-10, return_solution=False):
         """ Solve the equation system.
 
         Parameters
@@ -50,23 +52,24 @@ class Equation_System:
         """
 
         f_jit = jit(partial(self.f, a=a))
-        self.solution = jax_odeint(f_jit, self.y0, self.t, rtol=rtol, atol=atol)
+        self.solution = jax_odeint(
+            f_jit, self.y0, self.t, rtol=rtol, atol=atol)
         if return_solution:
             return self.solution
         else:
             return self.t, self.solution
-        
+
     def x(self):
         """ Return the time value."""
         return self.t
-    
+
     def initial_state(self):
         """ Return the initial state vector."""
         return self.y0
 
-    def plot_solution(self, component, title = None, xlabel = None, ylabel = None, legend = None):
+    def plot_solution(self, component, title=None, xlabel=None, ylabel=None, legend=None):
         """ Plot the solution.
-        
+
         Parameters
         ----------
         component : int
@@ -79,7 +82,7 @@ class Equation_System:
             The label of the y-axis.
         legend : string
             The legend of the plot.
-    
+
         Returns
         -------
         plot : matplotlib plot
@@ -97,10 +100,10 @@ class Equation_System:
             ax.legend(legend)
         plot = ax.plot(self.t, self.solution[:, component])
         return plot
-    
-    def plot_phase(self, components, title = None, xlabel = None, ylabel = None, zlabel = None, legend = None, **kwargs):
+
+    def plot_phase(self, components, title=None, xlabel=None, ylabel=None, zlabel=None, legend=None, **kwargs):
         """ Plot the phase space.
-        
+
         Parameters
         ----------
         components : array
@@ -113,7 +116,7 @@ class Equation_System:
             The label of the y-axis.
         legend : string
             The legend of the plot.
-        
+
         Returns
         -------
         plot : matplotlib plot
@@ -129,7 +132,8 @@ class Equation_System:
                 ax.set_ylabel(ylabel)
             if legend is not None:
                 ax.legend(legend)
-            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]], **kwargs)
+            plot = ax.plot(
+                self.solution[:, components[0]], self.solution[:, components[1]], **kwargs)
         elif len(components) == 3:
             ax = plt.figure().add_subplot(projection='3d')
             if title is not None:
@@ -142,6 +146,7 @@ class Equation_System:
                 ax.set_zlabel(zlabel)
             if legend is not None:
                 ax.legend(legend)
-            plot = ax.plot(self.solution[:, components[0]], self.solution[:, components[1]], self.solution[:, components[2]], **kwargs)
-        
+            plot = ax.plot(self.solution[:, components[0]], self.solution[:,
+                           components[1]], self.solution[:, components[2]], **kwargs)
+
         return plot

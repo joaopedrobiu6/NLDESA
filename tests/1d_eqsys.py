@@ -1,4 +1,4 @@
-from nldesa import Equation_System
+from nldesa import EquationSystem
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
 
@@ -21,7 +21,7 @@ n = 101
 a = jnp.asarray([0.0, -10])
 
 # Create the equation system
-eqsys = Equation_System(pendulum, y0, t0, t1, n)
+eqsys = EquationSystem(pendulum, y0, t0, t1, n)
 
 # Solve the equation system
 t, y = eqsys.solve(a = a)

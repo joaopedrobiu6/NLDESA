@@ -1,4 +1,4 @@
-from nldesa import Equation_System
+from nldesa import EquationSystem
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
 
@@ -19,7 +19,7 @@ n = 101
 a = jnp.asarray([1, 1, 0.1, 0.1, 0, 0, 0, 1]) #m, e, Ex, Ey, Ez, Bx, By, Bz
 
 # Create the equation system
-eqsys = Equation_System(lorentz_force, w0, t0, t1, n)
+eqsys = EquationSystem(lorentz_force, w0, t0, t1, n)
 
 # Solve the equation system
 t, w = eqsys.solve(a = a)

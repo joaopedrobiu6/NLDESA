@@ -1,1 +1,1 @@
-from ._eqsystem import Equation_System
+from ._eqsystem import EquationSystem
