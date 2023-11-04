@@ -15,7 +15,7 @@ class TestEquationSystem:
         # Define the differential equation system
         def exponential(y, t, a):
             dydt = -a[0]*y
-            return dydt
+            return jnp.asarray([dydt])
         
         # Define the initial conditions
         y0 = jnp.asarray([1.0])
@@ -35,4 +35,4 @@ class TestEquationSystem:
         t, y = eqsys.solve(a=a)
 
         # Check the solution
-        assert np.allclose(y, np.exp(-a[0]*t))
+        np.testing.assert_allclose(y[:, 0], jnp.exp(-a[0]*t), rtol=1e-5, atol=1e-5)

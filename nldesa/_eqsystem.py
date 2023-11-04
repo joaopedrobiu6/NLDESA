@@ -51,9 +51,10 @@ class EquationSystem:
             The solution.
         """
 
-        f_jit = jit(partial(self.f, a=a))
-        self.solution = jax_odeint(
-            f_jit, self.y0, self.t, rtol=rtol, atol=atol)
+        f_jit = jit(self.f)
+        self.solution = jax_odeint(partial(f_jit, a=a), self.y0, self.t, rtol=rtol, atol=atol)
+        # self.solution = jax_odeint(
+        #     f_jit, self.y0, self.t, rtol=rtol, atol=atol)
         if return_solution:
             return self.solution
         else:
