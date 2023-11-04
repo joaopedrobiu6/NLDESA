@@ -1,1 +1,1 @@
-from ._eqsystem import EquationSystem
+from ._objects import EquationSystem, StabilityAnalysis

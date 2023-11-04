@@ -4,7 +4,6 @@ from jax.experimental.ode import odeint as jax_odeint
 from jax import jit
 import matplotlib.pyplot as plt
 
-
 class EquationSystem:
     """ Differential Equation System 
 
@@ -69,12 +68,14 @@ class EquationSystem:
         return self.y0
 
     def plot_solution(self, component, title=None, xlabel=None, ylabel=None, legend=None):
-        """ Plot the solution.
+        """ Plot the solution as a function of time.
 
         Parameters
         ----------
         component : int
-            The component of the state vector to plot. 0 is the function value, 1 is the 1st derivative, etc.
+            The component of the state vector to plot. For a 1 dimensional system of second order,
+            0 is the function value, 1 is the 1st derivative, etc. For a 3 dimensional system of second order,
+            {0, 1, 2} = {x, y, z}, {3, 4, 5} = {x', y', z'}, etc.
         title : string
             The title of the plot.
         xlabel : string
@@ -102,13 +103,19 @@ class EquationSystem:
         plot = ax.plot(self.t, self.solution[:, component])
         return plot
 
-    def plot_phase(self, components, title=None, xlabel=None, ylabel=None, zlabel=None, legend=None, **kwargs):
-        """ Plot the phase space.
+    def plot_by_component(self, components, title=None, xlabel=None, ylabel=None, zlabel=None, legend=None, **kwargs):
+        """ Make a plot with the desired components [X = {x, y, z}, X' = {x', y', z'}, ...].
+            - Phase portrait: components = [X, X'] or [X, X', X'', ...]
+            - 3D plot: components = [0, 1, 2]
+            - Trajetory: components = [X = {x, y, z}
+            - Any combination desired of the outputs from the differential equation system.
 
         Parameters
         ----------
         components : array
-            The components of the state vector to plot. 0 is the function value, 1 is the 1st derivative, etc.
+            The components of the state vector to plot. For a 1 dimensional system of second order,
+            0 is the function value, 1 is the 1st derivative, etc. For a 3 dimensional system of second order,
+            {0, 1, 2} = {x, y, z}, {3, 4, 5} = {x', y', z'}, etc.
         title : string
             The title of the plot.
         xlabel : string
@@ -123,7 +130,10 @@ class EquationSystem:
         plot : matplotlib plot
             The plot.
         """
-        if len(components) == 2:
+        if len(components) == 1 or components is int:
+            print('Use plot_solution instead to plot a single component varying in time.')
+            quit()
+        elif len(components) == 2:
             ax = plt.figure().add_subplot()
             if title is not None:
                 ax.set_title(title)
@@ -149,5 +159,31 @@ class EquationSystem:
                 ax.legend(legend)
             plot = ax.plot(self.solution[:, components[0]], self.solution[:,
                            components[1]], self.solution[:, components[2]], **kwargs)
+        else:
+            print('Invalid number of components.')
+            quit()
 
         return plot
+
+class StabilityAnalysis(EquationSystem):
+    pass
+    """ Stability Analysis of a Differential Equation System 
+
+    Parameters
+    ----------
+    f : function
+        The function defining the differential equation system. 
+        The function must have the signature f(y, t, a), where y is the state vector, t is the time, and a is a parameter vector.
+    y0 : array
+        The initial state vector.
+    t0 : float
+        The initial time.
+    t1 : float
+        The final time.
+    n : int
+        The number of time steps.
+    """
+
+    def __init__(self, f, y0, t0, t1, n):
+        super().__init__(f, y0, t0, t1, n)
+

@@ -29,6 +29,6 @@ eqsys = EquationSystem(lorentz_force, w0, t0, t1, n)
 t, w = eqsys.solve(a=a)
 
 # Plot the phase space
-plot = eqsys.plot_phase(jnp.asarray(
+plot = eqsys.plot_by_component(jnp.asarray(
     [0, 1, 2]), title='Lorentz force', xlabel='x', ylabel='y', zlabel='z', color='r')
 plt.show()
