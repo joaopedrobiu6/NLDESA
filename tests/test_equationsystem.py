@@ -1,6 +1,6 @@
 """ pytest for eqsystem.py"""
 
-import jax
+import numpy as np
 import jax.numpy as jnp
 import pytest
 
@@ -13,25 +13,26 @@ class TestEquationSystem:
     def test_equationsystem(self):
         """Test the EquationSystem class"""
         # Define the differential equation system
-        def f(y, t, a):
-            return jnp.asarray([a[0]*y[0] - a[1]*y[0]*y[1], -a[2]*y[1] + a[3]*y[0]*y[1]])
-
+        def exponential(y, t, a):
+            dydt = -a[0]*y
+            return dydt
+        
         # Define the initial conditions
-        y0 = jnp.asarray([1.0, 1.0])
+        y0 = jnp.asarray([1.0])
+
         # Define the time interval
-        t0 = 0.0
-        t1 = 5.0
-        n = 101
+        T_0 = 0.0
+        T_1 = 10.0
+        N = 101
+
         # Define the parameters
-        a = jnp.asarray([1, 1, 1, 1])
+        a = jnp.asarray([0.1])
 
         # Create the equation system
-        eqsys = EquationSystem(f, y0, t0, t1, n)
+        eqsys = EquationSystem(exponential, y0, T_0, T_1, N)
 
         # Solve the equation system
         t, y = eqsys.solve(a=a)
 
-        # Test the solution
-        assert jnp.allclose(y[0], jnp.asarray([1.0, 1.0, 1.0, 1.0, 1.0]))
-        assert jnp.allclose(y[1], jnp.asarray([1.0, 0.99999994, 0.99999994, 0.99999994, 0.99999994]))
-        assert jnp.allclose(t, jnp.asarray([0.0, 0.05, 0.1, 0.15, 0.2]))
+        # Check the solution
+        assert np.allclose(y, np.exp(-a[0]*t))
