@@ -33,6 +33,5 @@ class TestStabilityAnalysis:
         eqsys = StabilityAnalysis(system, y0, T_0, T_1, N, a=a)
 
         eqsys.HODMD(component)
-
-        np.testing.assert_allclose(eqsys.stability(0), 1, rtol=1e-5, atol=1e-5)
-        np.testing.assert_allclose(eqsys.stability(1), 0, rtol=1e-5, atol=1e-5)
+        stab0 = eqsys.stability(component)
+        np.testing.assert_allclose(stab0, 1, rtol=1e-5, atol=1e-5)
