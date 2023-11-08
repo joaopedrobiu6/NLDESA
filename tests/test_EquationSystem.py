@@ -1,4 +1,4 @@
-""" pytest for eqsystem.py"""
+""" pytest for EquationSystem class"""
 
 import numpy as np
 import jax.numpy as jnp

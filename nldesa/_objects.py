@@ -2,7 +2,7 @@ from functools import partial
 import jax.numpy as jnp
 from jax.experimental.ode import odeint as jax_odeint
 from jax import jit
-from pydmd import HODMD
+from pydmd import DMD, HODMD
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -197,6 +197,12 @@ class StabilityAnalysis(EquationSystem):
         """Computes the solution."""
         f_jit = jit(self.f)
         self.solution = jax_odeint(partial(f_jit, a=a), self.y0, self.t, rtol=rtol, atol=atol)
+    
+    def DMD(self, component):
+        self.dmd = DMD(svd_rank=0, exact=True, opt=True).fit(self.solution[:, component][None])
+
+    def HODMD(self, component):
+        self.dmd = HODMD(svd_rank=1, exact=True, opt=True, d=1, svd_rank_extra=0).fit(self.solution[:, component][None])
 
     def solution(self):
         """ Return the solution of the equation system."""
@@ -217,8 +223,7 @@ class StabilityAnalysis(EquationSystem):
         eigenvalues : array
             The eigenvalues. The first column is the real part and the second column is the imaginary part.
         """
-        hodmd = HODMD(svd_rank=0, exact=True, opt=True, d=30).fit(self.solution[:, component][None])
-        self.eigenv = jnp.vstack((jnp.asarray([hodmd.eigs.real]), jnp.asarray([hodmd.eigs.imag]))).T
+        self.eigenv = jnp.vstack((jnp.asarray([self.dmd.eigs.real]), jnp.asarray([self.dmd.eigs.imag]))).T
         if absolute:
             return jnp.sqrt(self.eigenv[:, 0]**2 + self.eigenv[:, 1]**2)
         else:
@@ -288,7 +293,7 @@ class StabilityAnalysis(EquationSystem):
         Returns
         -------
         stability : array
-            The stability. 1 is stable, 0 is unstable.
+            The stability. <=0 is stable or deacaying, >0 is unstable.
         """
 
         self.eigenv = self.eigenvalues(component, absolute=False)

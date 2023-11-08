@@ -14,18 +14,21 @@ y0 = jnp.asarray([jnp.pi - 0.1, 0.0])
 
 # Define the time interval
 T_0 = 0.0
-T_1 = 10.0
+T_1 = 100.0
 N = 1001
-
+component = 0
 # Define the parameters
-a = jnp.asarray([10, 0])
+a = jnp.asarray([0.0, 0.001])
+print(f"Params: {a}")
 
 eqsys = StabilityAnalysis(system, y0, T_0, T_1, N, a=a)
-eqsys.plot_solution(0, title='Pendulum', xlabel='t', ylabel='theta')
-plt.show()
 
-eig = eqsys.eigenvalues(0)
+eqsys.HODMD(component)
+
+eig = eqsys.eigenvalues(component)
 print(eig)
 
-eqsys.plot_eigenvalues(0)
+eqsys.plot_eigenvalues(component)
 plt.show()
+
+print(eqsys.stability(component))
