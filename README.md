@@ -3,7 +3,7 @@
 This is a Python package for the stability analysis of nonlinear differential equations using JAX [1] and pyDMD [2] [3].
 The package is still in development and is not yet ready for use.
 
-Author: João Biu (joaopedrofbiu@tecnico.ulisboa.pt)
+Authors: João Biu (joaopedrofbiu@tecnico.ulisboa.pt), Miguel Lameiras (miguel.lameiras@tecnico.ulisboa.pt)
 
 [1] https://github.com/google/jax
 
