@@ -53,7 +53,7 @@ class EquationSystem:
         """
 
         f_jit = jit(self.f)
-        self.solution = jax_odeint(partial(f_jit, a=a), self.y0, self.t, rtol=rtol, atol=atol)
+        self.solution = jax_odeint(self.f, self.y0, self.t, a, rtol=rtol, atol=atol)
         # self.solution = jax_odeint(
         #     f_jit, self.y0, self.t, rtol=rtol, atol=atol)
         if return_solution:
@@ -196,7 +196,7 @@ class StabilityAnalysis(EquationSystem):
         super().__init__(f, y0, t0, t1, n)
         """Computes the solution."""
         f_jit = jit(self.f)
-        self.solution = jax_odeint(partial(f_jit, a=a), self.y0, self.t, rtol=rtol, atol=atol)
+        self.solution = jax_odeint(self.f, self.y0, self.t, a, rtol=rtol, atol=atol)
     
     def DMD(self, component):
         self.dmd = DMD(svd_rank=0, exact=True, opt=True).fit(self.solution[:, component][None])
