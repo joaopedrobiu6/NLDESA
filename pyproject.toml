@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nldesa"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="João Pedro Ferreira Biu", email="joaopedrofbiu@tecnico.ulisboa.pt" },
+  { name="Miguel de Oliveira Lameiras", email="miguel.lameiras@tecnico.ulisboa.pt" }
 ]
 description = "A package with tools to solve and analyse nonlinear differential equations Stability using DMD."
 readme = "README.md"

@@ -15,13 +15,13 @@ with open(os.path.join(here, "requirements.txt"), encoding="utf-8") as f:
 
 setup(
     name="nldesa",
-    version="0.0.1",
+    version="0.0.3",
     description=("Nonlinear Differential Equation Stability Analysis"),
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/joaopedrobiu6/nldesa/",
-    author="João Pedro Ferreira Biu",
-    author_email="joaopedrofbiu@tecnico.ulisboa.pt",
+    author="João Pedro Ferreira Biu, Miguel de Oliveira Lameiras",
+    author_email="joaopedrofbiu@tecnico.ulisboa.pt, miguel.lameiras@tecnico.ulisboa.pt",
     license="MIT",
     classifiers=[
         "Development Status :: 3 - Alpha",
