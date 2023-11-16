@@ -24,8 +24,8 @@ N = 100
 component = 0
 # Define the parameters
 
-a0 = jnp.linspace(0.2, 0.34, 300)
-a1 = jnp.linspace(0.1, 0.24, 300)
+a0 = jnp.linspace(0.2, 0.34, 900)
+a1 = jnp.linspace(0.1, 0.24, 900)
 a = jnp.asarray([a0, a1])
 # First column are the values of a[0], second column are the values of a[1]
 
