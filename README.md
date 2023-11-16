@@ -16,3 +16,6 @@ Using pip:
 For developers
 - Clone the repository
 `cd NLDESA && pip install -e .`
+
+## Stability Map
+![Stability Map](docs/front_image.png)
