@@ -298,5 +298,5 @@ class StabilityAnalysis(EquationSystem):
 
         self.eigenv = self.eigenvalues(component, absolute=False)
         mean_abs_value = jnp.mean(jnp.sqrt(self.eigenv[:, 0]**2 + self.eigenv[:, 1]**2))
-        self.stability = jnp.where(jnp.abs(1-mean_abs_value) < 10e-5, 1, 0)
+        self.stability = jnp.where(jnp.abs(mean_abs_value) <= 1, 1, 0)
         return self.stability
