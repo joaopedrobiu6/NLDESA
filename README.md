@@ -18,4 +18,4 @@ For developers
 `cd NLDESA && pip install -e .`
 
 ## Stability Map
-![Stability Map](docs/front_image.png)
+![Stability Map](docs/FirstEverZoom.mp4)
