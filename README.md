@@ -17,5 +17,6 @@ For developers
 - Clone the repository
 `cd NLDESA && pip install -e .`
 
-## Stability Map
-![Stability Map](docs/FirstEverZoom.mp4)
+## Stability Map Zoom
+![Stability Map Zoom](docs/FirstEverZoom.gif)
+Video with full resolution availabe in the [docs](https://github.com/joaopedrobiu6/NLDESA/docs/FirstEverZoom.gif)
