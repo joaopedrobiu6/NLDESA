@@ -1,10 +1,13 @@
 import jax.numpy as jnp
+from jax import jit
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as tck
 import time as time
 
 from nldesa import StabilityMap, StabilityMap_Plot
+
+NUMBER_OF_CORES = 8
 
 init_time = time.time()
 # Define the system
@@ -24,8 +27,8 @@ N = 100
 component = 0
 # Define the parameters
 
-a0 = jnp.linspace(0.2, 0.34, 900)
-a1 = jnp.linspace(0.1, 0.24, 900)
+a0 = jnp.linspace(-26, 26, 350)
+a1 = jnp.linspace(-26, 26, 350)
 a = jnp.asarray([a0, a1])
 # First column are the values of a[0], second column are the values of a[1]
 
@@ -33,7 +36,7 @@ if __name__ == '__main__': # Do not remove, to allow multiproessing in windows
     intermediate_time = time.time()
     print(f"Time to define the system: {intermediate_time - init_time}")
 
-    Map = StabilityMap(system, y0, T_0, T_1, N, a, component)
+    Map = StabilityMap(system, y0, T_0, T_1, N, a, component,NUMBER_OF_CORES)
 
     intermediate_time2 = time.time()
     print(f"Time to solve the system: {intermediate_time2 - intermediate_time}")

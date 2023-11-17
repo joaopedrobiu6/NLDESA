@@ -103,6 +103,7 @@ class EquationSystem:
         if legend is not None:
             ax.legend(legend)
         plot = ax.plot(self.t, self.solution[:, component])
+        plt.show()
         return plot
 
     def plot_by_component(self, components, title=None, xlabel=None, ylabel=None, zlabel=None, legend=None, **kwargs):
@@ -195,7 +196,7 @@ class StabilityAnalysis(EquationSystem):
     def __init__(self, f, y0, t0, t1, n, a, rtol=1e-10, atol=1e-10):
         super().__init__(f, y0, t0, t1, n)
         """Computes the solution."""
-        f_jit = jit(self.f)
+        #f_jit = jit(self.f)
         self.solution = jax_odeint(self.f, self.y0, self.t, a, rtol=rtol, atol=atol)
     
     def DMD(self, component):
@@ -280,7 +281,7 @@ class StabilityAnalysis(EquationSystem):
         ax.grid()
         return ax
     
-    def stability(self, component):
+    def eigen_stability(self, component):
         """ Return the stability of the solution for a component.
 
         Parameters
@@ -300,3 +301,6 @@ class StabilityAnalysis(EquationSystem):
         mean_abs_value = jnp.mean(jnp.sqrt(self.eigenv[:, 0]**2 + self.eigenv[:, 1]**2))
         self.stability = jnp.where(jnp.abs(1-mean_abs_value) < 10e-5, 1, 0)
         return self.stability
+
+    def pi_stability(self,component):
+        return 1 if jnp.max(jnp.convolve(self.solution[:,component], jnp.ones(8)/8, mode='valid')) < jnp.pi else 0
