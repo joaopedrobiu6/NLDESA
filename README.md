@@ -18,5 +18,9 @@ For developers
 `cd NLDESA && pip install -e .`
 
 ## Stability Map Zoom
+
+Each yellow pixel in the plot corresponds to a "stable" solution of the non linear Mathieu Equation. Each frame has 350*350 solutions computed in around 190 seconds.
+
 ![Stability Map Zoom](docs/FirstEverZoom.gif)
-Video with full resolution availabe in the [docs](https://github.com/joaopedrobiu6/NLDESA/docs/FirstEverZoom.gif)
+
+Video with full resolution availabe in the [docs](https://github.com/joaopedrobiu6/NLDESA/docs/FirstEverZoom.gif)!
