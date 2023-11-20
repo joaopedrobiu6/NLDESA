@@ -6,7 +6,9 @@ from nldesa import StabilityAnalysis
 def system(y, t, a):
     """Equation system of a pendulum."""
     theta, omega = y
-    dydt = jnp.asarray([omega, -(a[0] + a[1]*jnp.cos(t))*jnp.sin(theta)])
+    dydt = jnp.asarray([omega, -(a[0]+ t*a[1])*jnp.sin(theta)])
+    # dydt = jnp.asarray([omega, -(a[0] + a[1]*jnp.cos(t))*jnp.sin(theta)])
+
     return dydt
 
 # Define the initial conditions
@@ -18,17 +20,16 @@ T_1 = 100.0
 N = 1001
 component = 0
 # Define the parameters
-a = jnp.asarray([0.0, 0.001])
+a = jnp.asarray([10, 1])
 print(f"Params: {a}")
 
 eqsys = StabilityAnalysis(system, y0, T_0, T_1, N, a=a)
 
-eqsys.HODMD(component)
+eqsys.DMD(component)
 
-eig = eqsys.eigenvalues(component)
+
+eig = eqsys.eigenvalues(component, absolute=False)
 print(eig)
 
-eqsys.plot_eigenvalues(component)
+eqsys.plot_solution(component)
 plt.show()
-
-print(eqsys.stability(component))

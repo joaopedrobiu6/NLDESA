@@ -5,6 +5,7 @@ from jax import jit
 from pydmd import DMD, HODMD
 import numpy as np
 import matplotlib.pyplot as plt
+from diffrax import diffeqsolve, SemiImplicitEuler, ODETerm, SaveAt, PIDController
 
 class EquationSystem:
     """ Differential Equation System 
@@ -24,8 +25,8 @@ class EquationSystem:
         The number of time steps.
     """
 
-    def __init__(self, f, y0, t0, t1, n):
-        self.f = f
+    def __init__(self, terms, y0, t0, t1, n):
+        self.terms = terms
         self.y0 = y0
         self.t0 = t0
         self.t1 = t1
@@ -52,8 +53,16 @@ class EquationSystem:
             The solution.
         """
 
-        f_jit = jit(self.f)
-        self.solution = jax_odeint(self.f, self.y0, self.t, a, rtol=rtol, atol=atol)
+        if self.terms is None:
+            f_jit = jit(self.terms)
+            terms = ODETerm(f_jit)
+        solver = SemiImplicitEuler()
+        stepsize_controller = PIDController(rtol=1e-8, atol=1e-8, dtmin=1e-8)
+
+        self.solution = diffeqsolve(self.terms, solver=solver, y0=self.y0, t0=self.t0, t1=self.t1,
+            saveat=SaveAt(ts=self.t), max_steps=None, dt0=1e-8, stepsize_controller=stepsize_controller, args=a)
+
+        # self.solution = jax_odeint(self.f, self.y0, self.t, a, rtol=rtol, atol=atol)
         # self.solution = jax_odeint(
         #     f_jit, self.y0, self.t, rtol=rtol, atol=atol)
         if return_solution:

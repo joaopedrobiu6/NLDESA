@@ -1,11 +1,13 @@
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
 from nldesa import EquationSystem
+from diffrax import ODETerm
 
 # Define the system of equations
-def func(y, t, a):
+def func(y, t, args):
     """Equation system of an exponencial decay."""
-    dydt = -a[0]*y
+    a0 = args
+    dydt = -a0*y
     return jnp.asarray([dydt])
 
 # Define the initial conditions
@@ -17,13 +19,14 @@ T_1 = 10.0
 N = 101
 
 # Define the parameters
-a = jnp.asarray([0.1])
+args = (0.1)
 
 # Create the equation system
-eqsys = EquationSystem(func, y0, T_0, T_1, N)
+terms = ODETerm(func)
+eqsys = EquationSystem(terms, y0, T_0, T_1, N)
 
 # Solve the equation system
-t, y = eqsys.solve(a=a)
+t, y = eqsys.solve(a=args)
 
 # Plot the solution
 plot = eqsys.plot_solution(0)
